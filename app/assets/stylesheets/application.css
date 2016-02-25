@@ -25,6 +25,7 @@
  *= require plugins/quick_insert.min.css
  *= require plugins/table.min.css
  *= require plugins/video.min.css
+ *= require codemirror
  */
 .CodeMirror{
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace!important;

@@ -3,107 +3,32 @@
     <textarea id="edit" name="content"></textarea>
   </form>
 </div>
-<link href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.css" media="screen" rel="stylesheet">
-<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/codemirror.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.3.0/mode/xml/xml.min.js"></script>
 <script>
   $(function() {
     $('#edit').froalaEditor({
-      language: "en_gb",
-      width: 860,
+      language: "zh_cn",
+      width: 900,
       heightMin: 300,
       heightMax: 500,
-      fontFamilySelection: true,
-      
       requestWithCORS: false,
 
-      // Set the image upload parameter.
+      imageUploadDomain: "<%= Rails.application.config.qiniu_domain %>",
       imageUploadParam: 'file',
-
-      // Set the image upload URL.
-      // imageUploadURL: '/upload',
       imageUploadURL: 'http://upload.qiniu.com',
-
-      // Additional upload params.
       imageUploadParams: { token: '<%= @uptoken %>'},
-
-      // Set request type.
       imageUploadMethod: 'POST',
-
-      // Set max image size to 5MB.
       imageMaxSize: 5 * 1024 * 1024,
+      imageAllowedTypes: ['jpeg', 'jpg', 'png'],
 
-      // Allow to upload PNG and JPG.
-      imageAllowedTypes: ['jpeg', 'jpg', 'png']
-    })
-    .on('froalaEditor.image.beforeUpload', function (e, editor, images) {
-      // Return false if you want to stop the image upload.
-      console.log("上传");
-      console.log(images);
-    })
-    .on('froalaEditor.image.uploaded', function (e, editor, response) {
-      alert('uploaded');
-      console.log(reponse);
-      // Image was uploaded to the server.
-    })
-    .on('froalaEditor.image.inserted', function (e, editor, $img, response) {
-      alert('inserted');
-      // Image was inserted in the editor.
-    })
-    .on('froalaEditor.image.replaced', function (e, editor, $img, response) {
-      alert(replaced);
-      console.log(replaced);
-      // Image was replaced in the editor.
-    })
-    .on('froalaEditor.image.error', function (e, editor, error, response) {
-      alert(error);
-      console.log(response);
-
-      console.log(error);
-      // Bad link.
-      if (error.code == 1) {  }
-
-      // No link in upload response.
-      else if (error.code == 2) {  }
-
-      // Error during image upload.
-      else if (error.code == 3) {  }
-
-      // Parsing response failed.
-      else if (error.code == 4) {  }
-
-      // Image too text-large.
-      else if (error.code == 5) {  }
-
-      // Invalid image type.
-      else if (error.code == 6) {  }
-
-      // Image can be uploaded only to same domain in IE 8 and IE 9.
-      else if (error.code == 7) {  }
-
-      // Response contains the original server response to the request if available.
+      fileUploadDomain: "<%= Rails.application.config.qiniu_domain %>",
+      fileUploadParam: 'file',
+      fileUploadURL: 'http://upload.qiniu.com',
+      fileUploadParams: { token: '<%= @uptoken %>'},
+      fileUploadMethod: 'POST',
+      fileMaxSize: 20 * 1024 * 1024,
+      fileAllowedTypes: ['*']
     });
   });
 
-  // if ($.FroalaEditor) {
-  //   $.FroalaEditor.DEFAULTS.imageUploadToS3 =
-  //     {
-  //       "signature":"8Hu4fkEwfcK3TB3hni7wR+6sDQI=",
-  //       "policy":"eyJleHBpcmF0aW9uIjoiMjAxNi0wMi0yM1QxMjoxMTo1N1oiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJ0ZW1wX2ZpbGVzLyJdLFsic3RhcnRzLXdpdGgiLCIkeC1yZXF1ZXN0ZWQtd2l0aCIsInhociJdLFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsMjA5NzE1MjBdLFsic3RhcnRzLXdpdGgiLCIkY29udGVudC10eXBlIiwiIl0seyJidWNrZXQiOiJmcm9hbGEifSx7ImFjbCI6InB1YmxpYy1yZWFkIn0seyJzdWNjZXNzX2FjdGlvbl9zdGF0dXMiOiIyMDEifV19",
-  //       "bucket":"froala",
-  //       "acl":"public-read",
-  //       "keyStart":"temp_files/",
-  //       "accessKey":"AKIAJUHKR4R4IEZSEUYQ",
-  //       "region":"s3"}
-  //   $.FroalaEditor.DEFAULTS.fileUploadToS3 =
-  //     {
-  //       "signature":"8Hu4fkEwfcK3TB3hni7wR+6sDQI=",
-  //       "policy":"eyJleHBpcmF0aW9uIjoiMjAxNi0wMi0yM1QxMjoxMTo1N1oiLCJjb25kaXRpb25zIjpbWyJzdGFydHMtd2l0aCIsIiRrZXkiLCJ0ZW1wX2ZpbGVzLyJdLFsic3RhcnRzLXdpdGgiLCIkeC1yZXF1ZXN0ZWQtd2l0aCIsInhociJdLFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLDAsMjA5NzE1MjBdLFsic3RhcnRzLXdpdGgiLCIkY29udGVudC10eXBlIiwiIl0seyJidWNrZXQiOiJmcm9hbGEifSx7ImFjbCI6InB1YmxpYy1yZWFkIn0seyJzdWNjZXNzX2FjdGlvbl9zdGF0dXMiOiIyMDEifV19",
-  //       "bucket":"froala",
-  //       "acl":"public-read",
-  //       "keyStart":"temp_files/",
-  //       "accessKey":"AKIAJUHKR4R4IEZSEUYQ",
-  //       "region":"s3"}
-  // }
   
 </script>

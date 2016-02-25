@@ -15,6 +15,7 @@
 //= require turbolinks
 //= require froala_editor.min.js
 // Include other plugins.
+//= require plugins/support_qiniu.min.js
 //= require plugins/align.min.js
 //= require plugins/char_counter.min.js
 //= require plugins/code_beautifier.min.js
@@ -42,3 +43,5 @@
 //= require plugins/video.min.js
 // Include Language if needed
 //= require languages/zh_cn.js
+//= require codemirror
+//= require codemirror/modes/xml.js
